@@ -7,25 +7,11 @@ import lombok.Getter;
  */
 @Getter
 public enum  BaseResponseStatus {
-    // 1000 : 요청 성공
-    SUCCESS(true, 1000, "요청에 성공하였습니다."),
-    SUCCESS_READ_USERS(true, 1010, "회원 전체 정보 조회에 성공하였습니다."),
-    SUCCESS_READ_USER(true, 1011, "회원 정보 조회에 성공하였습니다."),
-    SUCCESS_POST_USER(true, 1012, "회원가입에 성공하였습니다."),
-    SUCCESS_LOGIN(true, 1013, "로그인에 성공하였습니다."),
-    SUCCESS_JWT(true, 1014, "JWT 검증에 성공하였습니다."),
-    SUCCESS_DELETE_USER(true, 1015, "회원 탈퇴에 성공하였습니다."),
-    SUCCESS_PATCH_USER(true, 1016, "회원정보 수정에 성공하였습니다."),
-    SUCCESS_READ_SEARCH_USERS(true, 1017, "회원 검색 조회에 성공하였습니다."),
-    SUCCESS_KAKAO_LOGIN(true, 1018, "카카오 로그인 성공."),
-    SUCCESS_IN_HOME(true, 1019, "집 인증 성공"),
-    NEW_KAKAO_USERS(true, 1200, "카카오 신규 회원입니다."),
-    SUCCESS_APPLE_LOGIN(true, 1210, "애플 로그인 성공."),
-    NEW_APPLE_USERS(true, 1211, "애플 신규 회원입니다."),
+
+    // 2000 : 요청 성공
+    SUCCESS(true, 2000, "요청에 성공하였습니다."),
 
 
-
-    // 2000 : Request 오류
     REQUEST_ERROR(false, 2000, "입력값을 확인해주세요."),
     EMPTY_USERID(false, 2001, "유저 아이디 값을 확인해주세요."),
     EMPTY_JWT(false, 2010, "JWT를 입력해주세요."),
@@ -49,7 +35,7 @@ public enum  BaseResponseStatus {
 
 
     // 3000 : Response 오류
-    JWT_ERROR(false, 3000, "JWT를 입력해주세요."),
+    EMPTY_JWT_ERROR(false, 3000, "JWT를 입력해주세요."),
     EMPTY_TYPE_ERROR(false, 3001, "type을 입력해주세요."),
     EMPTY_NICNAME_ERROR(false, 3002, "nickname을 입력해주세요."),
     EMPTY_SIZE_ERROR(false, 3003, "size를 입력해주세요."),

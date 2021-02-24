@@ -51,7 +51,7 @@ public class JwtService {
         // 1. JWT 추출
         String accessToken = getJwt();
         if (accessToken == null || accessToken.length() == 0) {
-            throw new BaseException(EMPTY_JWT);
+            throw new BaseException(EMPTY_JWT_ERROR);
         }
 
         // 2. JWT parsing

@@ -5,8 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PostKakaoLoginRes {
-
-    private final Long userIdx;
-    private final String jwt;
+public class PostUserRes {
+    private String jwt;
+    private Long userIdx;
 }

@@ -27,6 +27,6 @@ public class BaseEntity {
     @Column(name = "updatedAt", nullable = false)
     private Date updatedAt;
 
-    @Column(name = "isDeleted", nullable = false , columnDefinition = "char(1) default 'N'")
+    @Column(name = "isDeleted", columnDefinition = "char(1) default 'N'")
     private String isDeleted;
 }

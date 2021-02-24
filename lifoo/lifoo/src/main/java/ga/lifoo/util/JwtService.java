@@ -22,11 +22,10 @@ public class JwtService {
      * @param userId
      * @return String
      */
-    public String createJwt(int userId,String userName) {
+    public String createJwt(Long userId) {
         Date now = new Date();
         return Jwts.builder()
                 .claim("userId", userId)
-                .claim("userName",userName)
 
                 .setIssuedAt(now)
                 .signWith(SignatureAlgorithm.HS256, Secret.JWT_SECRET_KEY)

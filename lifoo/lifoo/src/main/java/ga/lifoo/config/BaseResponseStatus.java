@@ -49,11 +49,13 @@ public enum  BaseResponseStatus {
     EMPTY_REPORT_TYPE_ERROR(false, 3011, "신고 종류를 입력해주세요."),
     EMPTY_TARGET_ERROR(false, 3012, "대상 인덱스를 입력해주세요."),
     EMPTY_KEYWORD_ERROR(false, 3013, "검색어를 입력해주세요."),
+    EMPTY_SNSID_ERROR(false, 3013, "snsId를 입력해주세요."),
 
     ALREADY_NICKNAME_ERROR(false, 3100, "이미 존재하는 닉네임 입니다."),
     ALREADY_USER_ERROR(false, 3101, "이미 존재하는 회원입니다."),
     ALREADY_REPORT_POST_ERROR(false, 3102, "이미 신고한 게시물 입니다."),
     ALREADY_REPORT_COMMENT_ERROR(false, 3103, "이미 신고한 댓글 입니다."),
+    ALREADY_SNSID_ERROR(false, 3104, "이미 존재하는 snsId입니다."),
 
     INVALID_JWT(false, 3200, "유효하지 않은 JWT입니다."),
     NOT_EXIST_USER(false, 3201, "존재하지 않는 회원입니다."),

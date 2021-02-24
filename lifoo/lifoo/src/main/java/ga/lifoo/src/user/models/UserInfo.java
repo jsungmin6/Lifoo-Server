@@ -18,7 +18,7 @@ public class UserInfo extends BaseEntity {
     @Id // PK를 의미하는 어노테이션
     @Column(name = "user_idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     /**
      * 로그인 타입
@@ -35,17 +35,14 @@ public class UserInfo extends BaseEntity {
     private String snsId;
 
     /**
-     * status
-     * ADMIN,USER,BAN(금지),RESTRICT(제한)
-     */
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private USERSTATUS status;
-
-    /**
      * 닉네임
      */
     @Column(name = "nickname")
     private String nickname;
 
+    public UserInfo(LoginType loginType, String snsId, String nickname) {
+        this.loginType = loginType;
+        this.snsId = snsId;
+        this.nickname = nickname;
+    }
 }

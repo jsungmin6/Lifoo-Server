@@ -46,7 +46,7 @@ public class JwtService {
      * @return int
      * @throws BaseException
      */
-    public Integer getUserId() throws BaseException {
+    public Long getUserId() throws BaseException {
         // 1. JWT 추출
         String accessToken = getJwt();
         if (accessToken == null || accessToken.length() == 0) {
@@ -64,7 +64,9 @@ public class JwtService {
         }
 
         // 3. userId 추출
-        return claims.getBody().get("userId", Integer.class);
+        Long userId = Long.valueOf(claims.getBody().get("userId", Integer.class));
+
+        return userId;
     }
 
 }

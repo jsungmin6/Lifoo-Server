@@ -79,4 +79,25 @@ public class UserService {
         findUser.get().setIsDeleted("Y");
 
     }
+
+    @Transactional
+    public GetUserRes getUser(Long userIdx) throws BaseException {
+
+        //존재하지 않는 회원인지 확인
+        Optional<UserInfo> findUser = userRepository.findByUserIdxAndIsDeleted(userIdx,"N");
+        if(!findUser.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
+        }
+
+        GetUserRes getUserRes = new GetUserRes(findUser.get().getNickname());
+
+        System.out.println("getUserRes : "+getUserRes);
+
+        return getUserRes;
+
+
+        //회원 데이터 조회
+
+
+    }
 }

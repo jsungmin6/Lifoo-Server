@@ -74,8 +74,7 @@ public enum  BaseResponseStatus {
     FAILED_TO_ALREADY_SUCCESS(false, 3027, "이미 성공한 챌린지 입니다."),
     FAILED_TO_MATCH_CHALLENGE(false, 3028, "진행중인 챌린지가 아닙니다."),
 
-    NOT_FOUND_USERDEVICETOKEN(false, 3300, "유효한 userDeviceToken이 없습니다."),
-
+    NO_AUTHORITY(false, 3300, "권한이 없습니다."),
 
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),

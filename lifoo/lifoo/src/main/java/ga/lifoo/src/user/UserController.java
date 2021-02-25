@@ -3,6 +3,7 @@ package ga.lifoo.src.user;
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponse;
 import ga.lifoo.config.BaseResponseStatus;
+import ga.lifoo.src.user.models.GetUserRes;
 import ga.lifoo.src.user.models.PatchUserReq;
 import ga.lifoo.src.user.models.PostUserReq;
 import ga.lifoo.src.user.models.PostUserRes;
@@ -24,7 +25,7 @@ public class UserController {
     public BaseResponse<Void> getJwt() {
         System.out.println("start : 자동 로그인 api");
         try {
-            int userId = jwtService.getUserId();
+            Long userId = jwtService.getUserId();
             //TODO : 존재하지 않는 회원인지 체크
             return new BaseResponse<>(BaseResponseStatus.SUCCESS);
         } catch (BaseException exception) {
@@ -73,9 +74,21 @@ public class UserController {
     {
         System.out.println("start : 회원정보 수정 API");
 
+        Long jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        //PathVariable userIdx와 jwt의 userIdx 비교
+        if(!jwtUserIdx.equals(userIdx)){
+            return new BaseResponse<>(BaseResponseStatus.NO_AUTHORITY);
+        }
+
         if(patchUserReq.getNickname()==null){
             return new BaseResponse<>(BaseResponseStatus.EMPTY_NICNAME_ERROR);
         }
+
 
         try{
             userService.patchUser(userIdx,patchUserReq);
@@ -97,9 +110,50 @@ public class UserController {
     {
         System.out.println("start : 회원 삭제 API");
 
+        Long jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        //PathVariable userIdx와 jwt의 userIdx 비교
+        if(!jwtUserIdx.equals(userIdx)){
+            return new BaseResponse<>(BaseResponseStatus.NO_AUTHORITY);
+        }
+
         try{
             userService.deleteUser(userIdx);
             return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 회원 정보 조회 API
+     * @RequestBody Void
+     * @ResponseBody getUserRes
+     */
+    @ResponseBody
+    @GetMapping("/users/{userIdx}")
+    public BaseResponse<GetUserRes> getUsers(@PathVariable Long userIdx)
+    {
+        System.out.println("start : 회원 조회 API");
+
+        Long jwtUserIdx = null;
+        try {
+            jwtUserIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        //PathVariable userIdx와 jwt의 userIdx 비교
+        if(!jwtUserIdx.equals(userIdx)){
+            return new BaseResponse<>(BaseResponseStatus.NO_AUTHORITY);
+        }
+
+        try{
+            GetUserRes findUser = userService.getUser(userIdx);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS,findUser);
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

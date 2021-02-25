@@ -25,12 +25,12 @@ public class UserService {
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
 
         //중복 snsId를 가진 유저가 있는지 확인
-        Optional<UserInfo> findSnsId = userRepository.findBySnsId(postUserReq.getSnsId());
+        Optional<UserInfo> findSnsId = userRepository.findBySnsIdAndIsDeleted(postUserReq.getSnsId(),"N");
         if(findSnsId.isPresent()) {
             throw new BaseException(BaseResponseStatus.ALREADY_SNSID_ERROR);
         }
         //중복 nickname인지 확인
-        Optional<UserInfo> findNickname = userRepository.findByNickname(postUserReq.getNickname());
+        Optional<UserInfo> findNickname = userRepository.findByNicknameAndIsDeleted(postUserReq.getNickname(),"N");
         if(findNickname.isPresent()) {
             throw new BaseException(BaseResponseStatus.ALREADY_NICKNAME_ERROR);
         }
@@ -56,7 +56,7 @@ public class UserService {
     public void patchUser(Long userIdx, PatchUserReq patchUserReq) throws BaseException{
 
         //존재하지 않는 회원인지 확인
-        Optional<UserInfo> findUser = userRepository.findById(userIdx);
+        Optional<UserInfo> findUser = userRepository.findByUserIdxAndIsDeleted(userIdx,"N");
         if(!findUser.isPresent()) {
             throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
         }
@@ -70,7 +70,7 @@ public class UserService {
     public void deleteUser(Long userIdx) throws BaseException {
 
         //존재하지 않는 회원인지 확인
-        Optional<UserInfo> findUser = userRepository.findById(userIdx);
+        Optional<UserInfo> findUser = userRepository.findByUserIdxAndIsDeleted(userIdx,"N");
         if(!findUser.isPresent()) {
             throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
         }

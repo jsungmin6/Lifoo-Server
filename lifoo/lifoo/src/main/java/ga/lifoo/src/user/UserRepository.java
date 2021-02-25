@@ -10,8 +10,11 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserInfo, Long> {
 
-    Optional<UserInfo> findBySnsId(String snsId); //단건 Optional
-
-    Optional<UserInfo> findByNickname(String nickname); //단건 Optional
+    //snsId로 user 찾기
+    Optional<UserInfo> findBySnsIdAndIsDeleted(String snsId,String isDeleted); //단건 Optional
+    //nickname로 user 찾기
+    Optional<UserInfo> findByNicknameAndIsDeleted(String nickname,String isDeleted); //단건 Optional
+    //userIdx로 user 찾기
+    Optional<UserInfo> findByUserIdxAndIsDeleted(Long userIdx, String isDeleted);
 
 }

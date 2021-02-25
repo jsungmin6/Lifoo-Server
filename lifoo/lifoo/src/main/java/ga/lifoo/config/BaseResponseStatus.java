@@ -49,7 +49,8 @@ public enum  BaseResponseStatus {
     EMPTY_REPORT_TYPE_ERROR(false, 3011, "신고 종류를 입력해주세요."),
     EMPTY_TARGET_ERROR(false, 3012, "대상 인덱스를 입력해주세요."),
     EMPTY_KEYWORD_ERROR(false, 3013, "검색어를 입력해주세요."),
-    EMPTY_SNSID_ERROR(false, 3013, "snsId를 입력해주세요."),
+    EMPTY_SNSID_ERROR(false, 3014, "snsId를 입력해주세요."),
+    EMPTY_USERIDX_ERROR(false, 3015, "userIdx를 입력해주세요."),
 
     ALREADY_NICKNAME_ERROR(false, 3100, "이미 존재하는 닉네임 입니다."),
     ALREADY_USER_ERROR(false, 3101, "이미 존재하는 회원입니다."),
@@ -64,8 +65,7 @@ public enum  BaseResponseStatus {
     INVALID_TYPE(false, 3204, "type 형식이 아닙니다."),
     INVALID_POST_TITLE(false, 3205, "제목 형식이 아닙니다."),
 
-    FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),
-    FAILED_TO_DELETE_USER(false, 3015, "회원 탈퇴에 실패하였습니다."),
+
     FAILED_TO_PATCH_USER(false, 3016, "개인정보 수정에 실패하였습니다."),
     FAILED_TO_CHALLENGE_TIME(false, 3017, "챌린지 중이 아닙니다."),
     FAILED_TO_ALREADY_START(false, 3018, "이미 챌린지 중 입니다."),

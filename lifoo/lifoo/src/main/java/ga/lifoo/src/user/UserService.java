@@ -65,4 +65,18 @@ public class UserService {
         findUser.get().setNickname(patchUserReq.getNickname());
 
     }
+
+    @Transactional
+    public void deleteUser(Long userIdx) throws BaseException {
+
+        //존재하지 않는 회원인지 확인
+        Optional<UserInfo> findUser = userRepository.findById(userIdx);
+        if(!findUser.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
+        }
+
+        //회원 삭제
+        findUser.get().setIsDeleted("Y");
+
+    }
 }

@@ -84,4 +84,24 @@ public class UserController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+
+
+    /**
+     * 회원 삭제 API
+     * @RequestBody Void
+     * @ResponseBody Void
+     */
+    @ResponseBody
+    @DeleteMapping("/users/{userIdx}")
+    public BaseResponse<Void> patchUsers(@PathVariable Long userIdx)
+    {
+        System.out.println("start : 회원 삭제 API");
+
+        try{
+            userService.deleteUser(userIdx);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 }

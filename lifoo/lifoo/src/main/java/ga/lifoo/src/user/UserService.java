@@ -2,10 +2,7 @@ package ga.lifoo.src.user;
 
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponseStatus;
-import ga.lifoo.src.user.models.LoginType;
-import ga.lifoo.src.user.models.PostUserReq;
-import ga.lifoo.src.user.models.PostUserRes;
-import ga.lifoo.src.user.models.UserInfo;
+import ga.lifoo.src.user.models.*;
 import ga.lifoo.util.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,5 +50,19 @@ public class UserService {
         //jwt생성
         String jwt=jwtService.createJwt(id);
         return new PostUserRes(jwt,id);
+    }
+
+    @Transactional
+    public void patchUser(Long userIdx, PatchUserReq patchUserReq) throws BaseException{
+
+        //존재하지 않는 회원인지 확인
+        Optional<UserInfo> findUser = userRepository.findById(userIdx);
+        if(!findUser.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
+        }
+
+        //회원 정보 업데이트
+        findUser.get().setNickname(patchUserReq.getNickname());
+
     }
 }

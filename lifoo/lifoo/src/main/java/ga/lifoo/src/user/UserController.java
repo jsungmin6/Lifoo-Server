@@ -3,6 +3,7 @@ package ga.lifoo.src.user;
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponse;
 import ga.lifoo.config.BaseResponseStatus;
+import ga.lifoo.src.user.models.PatchUserReq;
 import ga.lifoo.src.user.models.PostUserReq;
 import ga.lifoo.src.user.models.PostUserRes;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +60,28 @@ public class UserController {
             return new BaseResponse<>(exception.getStatus());
         }
 
+    }
+
+    /**
+     * 회원정보 수정 API
+     * @RequestBody PatchUserReq
+     * @ResponseBody Void
+     */
+    @ResponseBody
+    @PatchMapping("/users/{userIdx}")
+    public BaseResponse<Void> patchUsers(@PathVariable Long userIdx, @RequestBody PatchUserReq patchUserReq)
+    {
+        System.out.println("start : 회원정보 수정 API");
+
+        if(patchUserReq.getNickname()==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_NICNAME_ERROR);
+        }
+
+        try{
+            userService.patchUser(userIdx,patchUserReq);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 }

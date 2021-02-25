@@ -51,6 +51,7 @@ public enum  BaseResponseStatus {
     EMPTY_KEYWORD_ERROR(false, 3013, "검색어를 입력해주세요."),
     EMPTY_SNSID_ERROR(false, 3014, "snsId를 입력해주세요."),
     EMPTY_USERIDX_ERROR(false, 3015, "userIdx를 입력해주세요."),
+    EMPTY_ACCESSTOKEN_ERROR(false, 3016, "access-token을 입력해 주세요."),
 
     ALREADY_NICKNAME_ERROR(false, 3100, "이미 존재하는 닉네임 입니다."),
     ALREADY_USER_ERROR(false, 3101, "이미 존재하는 회원입니다."),
@@ -66,15 +67,10 @@ public enum  BaseResponseStatus {
     INVALID_POST_TITLE(false, 3205, "제목 형식이 아닙니다."),
 
 
-    FAILED_TO_PATCH_USER(false, 3016, "개인정보 수정에 실패하였습니다."),
-    FAILED_TO_CHALLENGE_TIME(false, 3017, "챌린지 중이 아닙니다."),
-    FAILED_TO_ALREADY_START(false, 3018, "이미 챌린지 중 입니다."),
-    FAILED_TO_NOT_IN_HOME(false, 3025, "현재 집에 있지 않습니다."),
-    NOT_FOUND_CHALLENGE(false, 3026, "존재하지 않는 챌린지 입니다."),
-    FAILED_TO_ALREADY_SUCCESS(false, 3027, "이미 성공한 챌린지 입니다."),
-    FAILED_TO_MATCH_CHALLENGE(false, 3028, "진행중인 챌린지가 아닙니다."),
 
     NO_AUTHORITY(false, 3300, "권한이 없습니다."),
+
+    JSON_PROCESSING_ERROR(false, 3400, "JsonProcessingException 에러 입니다."),
 
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),

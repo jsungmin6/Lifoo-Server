@@ -1,12 +1,21 @@
 package ga.lifoo.src.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponse;
 import ga.lifoo.config.BaseResponseStatus;
 import ga.lifoo.src.user.models.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ga.lifoo.util.JwtService;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
 @RestController
@@ -179,4 +188,31 @@ public class UserController {
         return new BaseResponse<>(BaseResponseStatus.SUCCESS,getUserIdxRes);
 
     }
+
+
+    /**
+     * 카카오톡 로그인 api
+     * @RequestBody PostKakaoLoginReq
+     * @ResponseBody PostKakaoLoginRes
+     * @throws BaseException
+     */
+    @ResponseBody
+    @PostMapping("/login/kakao")
+    public BaseResponse<PostKakaoLoginRes> getKakaoUser(@RequestBody PostKakaoLoginReq postKakaoLoginReq) {
+
+        if(postKakaoLoginReq.getAccessToken()==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_ACCESSTOKEN_ERROR);
+        }
+
+        try{
+            PostKakaoLoginRes KakaoUserInfo = userService.getKakaoUserInfo(postKakaoLoginReq);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS, KakaoUserInfo);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
+
+
 }

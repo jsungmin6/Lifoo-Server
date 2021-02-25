@@ -1,10 +1,10 @@
 package ga.lifoo.src.user.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
+@Data
 public class PostKakaoLoginRes {
 
     private final Long userIdx;

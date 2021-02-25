@@ -2,11 +2,11 @@ package ga.lifoo.src.user.models;
 
 
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-@Getter
+@Data
 public class PostKakaoLoginReq {
     private String accessToken;
 }

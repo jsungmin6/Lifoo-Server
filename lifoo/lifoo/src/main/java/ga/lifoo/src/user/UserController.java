@@ -3,10 +3,7 @@ package ga.lifoo.src.user;
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponse;
 import ga.lifoo.config.BaseResponseStatus;
-import ga.lifoo.src.user.models.GetUserRes;
-import ga.lifoo.src.user.models.PatchUserReq;
-import ga.lifoo.src.user.models.PostUserReq;
-import ga.lifoo.src.user.models.PostUserRes;
+import ga.lifoo.src.user.models.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ga.lifoo.util.JwtService;
@@ -157,5 +154,29 @@ public class UserController {
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }
+    }
+
+    /**
+     * 회원 인덱스 조회 API
+     * @RequestBody Void
+     * @ResponseBody getUserIdxRes
+     */
+    @ResponseBody
+    @GetMapping("/users/index")
+    public BaseResponse<GetUserIdxRes> getUsers()
+    {
+        System.out.println("start : 회원 인덱스 조회 API");
+
+        Long jwtUserIdx = null;
+        try {
+            jwtUserIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        GetUserIdxRes getUserIdxRes = new GetUserIdxRes(jwtUserIdx);
+
+        return new BaseResponse<>(BaseResponseStatus.SUCCESS,getUserIdxRes);
+
     }
 }

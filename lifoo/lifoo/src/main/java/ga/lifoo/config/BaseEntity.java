@@ -17,16 +17,16 @@ import java.util.Date;
 public class BaseEntity {
 
     @CreationTimestamp
-    @Column(name = "createdAt", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
 
     //    @Getter
 //    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", insertable = false, updatable = false)
 //    @Temporal(TIMESTAMP)
     @UpdateTimestamp
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
-    @Column(name = "isDeleted", columnDefinition = "char(1) default 'N'")
+    @Column(name = "is_deleted", columnDefinition = "char(1) default 'N'")
     private String isDeleted;
 }

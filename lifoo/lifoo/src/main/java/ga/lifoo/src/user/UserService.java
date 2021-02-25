@@ -48,7 +48,7 @@ public class UserService {
         //가입
         UserInfo userInfo = new UserInfo(loginType, postUserReq.getSnsId(), postUserReq.getNickname());
         UserInfo saveUserInfo = userRepository.save(userInfo);
-        Long id = saveUserInfo.getId();
+        Long id = saveUserInfo.getUserIdx();
 
         //jwt생성
         String jwt=jwtService.createJwt(id);

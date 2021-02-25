@@ -1,8 +1,7 @@
-package ga.lifoo.src.alarm.models;
-
+package ga.lifoo.src.report.models;
 
 import ga.lifoo.config.BaseEntity;
-import ga.lifoo.src.post.models.Post;
+import ga.lifoo.src.user.models.LoginType;
 import ga.lifoo.src.user.models.UserInfo;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -15,16 +14,16 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 @Entity
-@Table(name = "alarm")
-public class Alarm extends BaseEntity {
+@Table(name = "report")
+public class Report extends BaseEntity {
 
     /**
-     * 알람 인덱스
+     * 신고 인데스
      */
-    @Id
-    @Column(name = "alarm_idx")
+    @Id // PK를 의미하는 어노테이션
+    @Column(name = "report_idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long alarmIdx;
+    private Long reportIdx;
 
     /**
      * 유저 인덱스
@@ -34,15 +33,17 @@ public class Alarm extends BaseEntity {
     private UserInfo userInfo;
 
     /**
-     * 게시물 인덱스
+     * 신고 종류
+     * POST,COMMENT
      */
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "post_idx")
-    private Post post;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private ReportStatus status;
 
     /**
-     * 알람 내용
+     * 신고대상
      */
-    @Column(name = "alarm_text")
-    private String alarmText;
+    @Column(name = "target_idx")
+    private Long targetIdx;
+
 }

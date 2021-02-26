@@ -1,2 +1,34 @@
 # Lifoo-Server
+
 [앱 개발 프로젝트] Lifoo-Server
+
+### 1. 소개
+
+- 음식사진 커뮤니티 앱
+
+- [API 명세서](https://documenter.getpostman.com/view/11807633/TWDXmvw7)
+
+### 2. 기능
+
+- 게시판
+  - 사진, 글 업로드
+  - 다양한 이모지 표시 기능(like 좋아요)
+  - 게시물 필터 기능
+  - 신고 기능
+- 댓글
+  - 신고 기능
+  - 좋아요 기능
+- 회원
+  - 카카오 로그인
+  - 랜덤 닉네임 생성 기능
+  - 회원가입
+
+### 3. 기술
+
+- Spring boot, Spring Data Jpa, Spring Sequrity, Nginx, EC2, RDS
+
+### 4. 문제와 해결
+
+- Entity default 입력
+- EC2 memory 부족
+- 랜덤 닉네임 메커니즘

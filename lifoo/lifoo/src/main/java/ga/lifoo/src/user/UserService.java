@@ -29,6 +29,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
 
+import static ga.lifoo.util.RandomNickname.makeNickName;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -79,6 +81,8 @@ public class UserService {
         if(!findUser.isPresent()) {
             throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
         }
+
+        //TODO : 이미 존재하는 닉네임인지 확인
 
         //회원 정보 업데이트
         findUser.get().setNickname(patchUserReq.getNickname());
@@ -165,5 +169,24 @@ public class UserService {
         Long userIdx = findKakaoUser.get().getUserIdx();
         String jwt = jwtService.createJwt(userIdx);
         return new PostKakaoLoginRes(userIdx,jwt);
+    }
+
+    public GetNicknameRes getNickname() throws BaseException {
+        String nickName = null;
+        //랜덤 닉네임 만들기
+        while(true){
+            nickName = makeNickName();
+            System.out.println("nickName : "+nickName);
+
+            Optional<UserInfo> findNickname = userRepository.findByNicknameAndIsDeleted(nickName, "N");
+
+            //DB에 없다면
+            if(!findNickname.isPresent()){
+                break;
+            }
+        }
+
+        return new GetNicknameRes(nickName);
+
     }
 }

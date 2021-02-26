@@ -5,10 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -27,6 +24,11 @@ public class BaseEntity {
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
-    @Column(name = "is_deleted", columnDefinition = "char(1) default 'N'")
+    @Column(name = "is_deleted", columnDefinition = "CHAR(1) NULL DEFAULT 'N'")
     private String isDeleted;
+
+    @PrePersist
+    public void prePersist() {
+        this.isDeleted = this.isDeleted == null ? "N" : this.isDeleted;
+    }
 }

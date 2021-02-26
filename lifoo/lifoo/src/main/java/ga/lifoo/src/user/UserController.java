@@ -214,5 +214,22 @@ public class UserController {
     }
 
 
+    /**
+     * 카카오톡 로그인 api
+     * @RequestBody PostKakaoLoginReq
+     * @ResponseBody PostKakaoLoginRes
+     */
+    @ResponseBody
+    @GetMapping("/nicknames")
+    public BaseResponse<GetNicknameRes> getKakaoUser() {
+
+        try{
+            GetNicknameRes nickname = userService.getNickname();
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS, nickname);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
 
 }

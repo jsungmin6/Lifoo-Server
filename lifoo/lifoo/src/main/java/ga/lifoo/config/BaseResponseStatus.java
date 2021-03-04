@@ -65,7 +65,8 @@ public enum  BaseResponseStatus {
     INVALID_ACCESS_TOKEN(false, 3203, "유효하지 않은 access-token입니다."),
     INVALID_TYPE(false, 3204, "type 형식이 아닙니다."),
     INVALID_POST_TITLE(false, 3205, "제목 형식이 아닙니다."),
-
+    INVALID_IMOGE(false, 3206, "존재하지 않는 이모지입니다."),
+    INVALID_POST(false, 3207, "존재하지 않는 게시물입니다."),
 
 
     NO_AUTHORITY(false, 3300, "권한이 없습니다."),

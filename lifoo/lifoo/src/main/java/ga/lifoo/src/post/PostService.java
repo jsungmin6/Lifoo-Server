@@ -2,10 +2,7 @@ package ga.lifoo.src.post;
 
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponseStatus;
-import ga.lifoo.src.post.models.GetPostsRes;
-import ga.lifoo.src.post.models.Post;
-import ga.lifoo.src.post.models.PostImg;
-import ga.lifoo.src.post.models.PostPostsReq;
+import ga.lifoo.src.post.models.*;
 import ga.lifoo.src.user.UserRepository;
 import ga.lifoo.src.user.models.LoginType;
 import ga.lifoo.src.user.models.PostUserReq;
@@ -15,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,6 +44,7 @@ public class PostService {
     }
 
 
+
     public GetPostsRes getPosts(String type, Long size, Long page, String keyword) throws BaseException {
 
         //type != SEARCH
@@ -53,5 +53,9 @@ public class PostService {
 
         //쿼리문 통해 게시물 리스트 와 클릭된 이모지수 가져오기.
 
+
+        List<PostListDto> postListDtos = new ArrayList<>();
+
+        return new GetPostsRes(postListDtos);
     }
 }

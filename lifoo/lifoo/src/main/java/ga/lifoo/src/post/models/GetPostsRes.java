@@ -9,4 +9,7 @@ public class GetPostsRes {
 
     private List<PostListDto> postList;
 
+    public GetPostsRes(List<PostListDto> postList) {
+        this.postList = postList;
+    }
 }

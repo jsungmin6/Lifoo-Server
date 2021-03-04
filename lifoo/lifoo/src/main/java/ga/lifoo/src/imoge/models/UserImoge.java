@@ -1,9 +1,9 @@
-package ga.lifoo.src.user.models;
+package ga.lifoo.src.imoge.models;
 
 
 import ga.lifoo.config.BaseEntity;
-import ga.lifoo.src.imoge.models.Imoge;
 import ga.lifoo.src.post.models.Post;
+import ga.lifoo.src.user.models.UserInfo;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -52,4 +52,17 @@ public class UserImoge extends BaseEntity {
      */
     @Column(name = "is_clicked", columnDefinition = "char(1) default 'Y'")
     private String isClicked;
+
+    public UserImoge(UserInfo userInfo, Imoge imoge, Post post) {
+        this.userInfo = userInfo;
+        this.imoge = imoge;
+        this.post = post;
+    }
+
+    public UserImoge(UserInfo userInfo, Imoge imoge, Post post, String isClicked) {
+        this.userInfo = userInfo;
+        this.imoge = imoge;
+        this.post = post;
+        this.isClicked = isClicked;
+    }
 }

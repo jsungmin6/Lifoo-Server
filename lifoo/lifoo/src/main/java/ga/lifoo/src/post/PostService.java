@@ -2,6 +2,7 @@ package ga.lifoo.src.post;
 
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponseStatus;
+import ga.lifoo.src.post.models.GetPostsRes;
 import ga.lifoo.src.post.models.Post;
 import ga.lifoo.src.post.models.PostImg;
 import ga.lifoo.src.post.models.PostPostsReq;
@@ -44,4 +45,13 @@ public class PostService {
     }
 
 
+    public GetPostsRes getPosts(String type, Long size, Long page, String keyword) throws BaseException {
+
+        //type != SEARCH
+
+        //type = SEARCH
+
+        //쿼리문 통해 게시물 리스트 와 클릭된 이모지수 가져오기.
+
+    }
 }

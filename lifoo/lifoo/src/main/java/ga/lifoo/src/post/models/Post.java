@@ -43,4 +43,9 @@ public class Post extends BaseEntity {
     @Column(name = "post_body")
     private String postBody;
 
+    public Post(UserInfo userInfo, String postTitle, String postBody) {
+        this.userInfo = userInfo;
+        this.postTitle = postTitle;
+        this.postBody = postBody;
+    }
 }

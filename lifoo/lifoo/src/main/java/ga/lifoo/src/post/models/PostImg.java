@@ -38,5 +38,8 @@ public class PostImg extends BaseEntity {
     @Column(name = "post_url")
     private String postUrl;
 
-
+    public PostImg(Post post, String postUrl) {
+        this.post = post;
+        this.postUrl = postUrl;
+    }
 }

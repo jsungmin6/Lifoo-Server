@@ -4,18 +4,19 @@ import java.util.*;
 
 public class RandomNickname {
     private static ArrayList<String> adjective = new ArrayList<String>(
-            Arrays.asList("맛있는",
+            Arrays.asList(
+                    "맛있는",
                     "맛없는",
                     "달콤한",
                     "뜨거운",
                     "차가운",
-                    "일급비밀",
-                    "토나오는",
+                    "보통",
+                    "박살난",
                     "그냥",
                     "매운",
                     "귀여운",
                     "최고의",
-                    "기가막힌",
+                    "기막힌",
                     "양산형",
                     "엄마표",
                     "더러운",
@@ -28,14 +29,16 @@ public class RandomNickname {
                     "구수한",
                     "시원한",
                     "따뜻한",
-                    "배달시킨",
+                    "초라한",
                     "짭짤한",
                     "시큼한",
                     "칠성급",
-                    "짜증나는"));
+                    "아빠표"
+            ));
 
     private static ArrayList<String> food = new ArrayList<String>(
-            Arrays.asList("라면",
+            Arrays.asList(
+                    "라면",
                     "감자",
                     "만두",
                     "앙버터",
@@ -45,25 +48,26 @@ public class RandomNickname {
                     "해물찜",
                     "조개탕",
                     "연어회",
-                    "연어초밥",
+                    "연어",
                     "꽃게탕",
-                    "간장게장",
-                    "김치라면",
-                    "김치볶음밥",
-                    "김치만두",
+                    "짬뽕",
+                    "떡라면",
+                    "볶음밥",
+                    "김치전",
                     "쌈밥",
-                    "고기만두",
-                    "갈비만두",
-                    "딸기케이크",
+                    "호박전",
+                    "케이크",
+                    "젤리",
                     "초콜릿",
                     "사탕",
                     "빼빼로",
-                    "호두과자",
+                    "튀김",
                     "붕어빵",
                     "떡볶이",
                     "순대",
                     "어묵",
-                    "삼겹살"));
+                    "삼겹살"
+            ));
 
     private static ArrayList<String> getAdjective() {
         return adjective;

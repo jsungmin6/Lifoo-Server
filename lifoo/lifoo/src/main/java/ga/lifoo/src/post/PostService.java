@@ -24,6 +24,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostImgRepository postImgRepository;
     private final UserRepository userRepository;
+    private final PostOrderRepository postOrderRepository;
 
     /**
      * 회원가입
@@ -44,18 +45,27 @@ public class PostService {
     }
 
 
+    /**
+     * 게시물 조회
+     */
+    @Transactional
+    public GetPostsRes getPosts(String type, Long size, Long page, String keyword, Long userIdx) throws BaseException {
 
-    public GetPostsRes getPosts(String type, Long size, Long page, String keyword) throws BaseException {
+        List<PostListDto> postList = postOrderRepository.findPostList(size, page);
+        System.out.println("postList.getClass() : " + postList.getClass());
+        for (PostListDto postListDto : postList) {
+            System.out.println(postListDto);
+        };
 
-        //type != SEARCH
+        GetPostsRes getPostsRes = new GetPostsRes(postList);
 
         //type = SEARCH
+        //type = USER
+        //type = RANK
+        //type = BASIC
 
         //쿼리문 통해 게시물 리스트 와 클릭된 이모지수 가져오기.
 
-
-        List<PostListDto> postListDtos = new ArrayList<>();
-
-        return new GetPostsRes(postListDtos);
+        return getPostsRes;
     }
 }

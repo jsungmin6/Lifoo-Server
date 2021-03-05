@@ -53,45 +53,45 @@ public class PostController {
     }
 
 
-//    /**
-//     * 게시물 조회 API
-//     * @ResponseBody GetPostsRes
-//     */
-//    @ResponseBody
-//    @PostMapping("/posts")
-//    public BaseResponse<GetPostsRes> postPosts(@RequestParam(value = "type") String type,
-//                                               @RequestParam(value = "size") Long size,
-//                                               @RequestParam(value = "page") Long page,
-//                                               @RequestParam(value = "keyword", required = false) String keyword)
-//    {
-//        System.out.println("게시물 조회 API ");
-//
-//        Long userIdx;
-//        try {
-//            userIdx = jwtService.getUserId();
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//
-//        if(type==null){
-//            return new BaseResponse<>(BaseResponseStatus.EMPTY_TYPE_ERROR);
-//        }
-//        if(size==null){
-//            return new BaseResponse<>(BaseResponseStatus.EMPTY_SIZE_ERROR);
-//        }
-//        if(page==null){
-//            return new BaseResponse<>(BaseResponseStatus.EMPTY_PAGE_ERROR);
-//        }
-//        if(type == "SEARCH" && keyword==null){
-//            return new BaseResponse<>(BaseResponseStatus.EMPTY_KEYWORD_ERROR);
-//        }
-//
-//        try{
-//            GetPostsRes posts = postService.getPosts(type, size, page, keyword);
-//            return new BaseResponse<>(BaseResponseStatus.SUCCESS,posts);
-//        }catch (BaseException exception){
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//
-//    }
+    /**
+     * 게시물 조회 API
+     * @ResponseBody GetPostsRes
+     */
+    @ResponseBody
+    @GetMapping("/posts")
+    public BaseResponse<GetPostsRes> getPosts(@RequestParam(value = "type") String type,
+                                               @RequestParam(value = "size") Long size,
+                                               @RequestParam(value = "page") Long page,
+                                               @RequestParam(value = "keyword", required = false) String keyword)
+    {
+        System.out.println("게시물 조회 API ");
+
+        Long userIdx;
+        try {
+            userIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        if(type==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_TYPE_ERROR);
+        }
+        if(size==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_SIZE_ERROR);
+        }
+        if(page==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_PAGE_ERROR);
+        }
+        if(type == "SEARCH" && keyword==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_KEYWORD_ERROR);
+        }
+
+        try{
+            GetPostsRes posts = postService.getPosts(type, size, page, keyword,userIdx);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS,posts);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
 }

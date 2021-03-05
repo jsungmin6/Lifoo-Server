@@ -2,11 +2,22 @@ package ga.lifoo.src.post.models;
 
 import lombok.Data;
 
+import java.math.BigInteger;
+import java.sql.Timestamp;
+
 @Data
 public class PostListDto {
-    private Long postIdx;
+    private BigInteger postIdx;
     private String postTitle;
-    private Long totalImoge;
+    private BigInteger totalImoge;
     private String postUrl;
-    private String createdAt;
+    private Timestamp createdAt;
+
+    public PostListDto(BigInteger postIdx, String postTitle, BigInteger totalImoge, String postUrl, Timestamp createdAt) {
+        this.postIdx = postIdx;
+        this.postTitle = postTitle;
+        this.totalImoge = totalImoge;
+        this.postUrl = postUrl;
+        this.createdAt = createdAt;
+    }
 }

@@ -59,9 +59,9 @@ public class PostController {
      */
     @ResponseBody
     @GetMapping("/posts")
-    public BaseResponse<GetPostsRes> getPosts(@RequestParam(value = "type") String type,
-                                               @RequestParam(value = "size") Long size,
-                                               @RequestParam(value = "page") Long page,
+    public BaseResponse<GetPostsRes> getPosts(@RequestParam(value = "type" ,required = false) String type,
+                                               @RequestParam(value = "size", required = false) Long size,
+                                               @RequestParam(value = "page", required = false) Long page,
                                                @RequestParam(value = "keyword", required = false) String keyword)
     {
         System.out.println("게시물 조회 API ");
@@ -82,9 +82,17 @@ public class PostController {
         if(page==null){
             return new BaseResponse<>(BaseResponseStatus.EMPTY_PAGE_ERROR);
         }
-        if(type == "SEARCH" && keyword==null){
+
+        if(!type.equals("BASIC") && !type.equals("RANK") && !type.equals("USER") && !type.equals("SEARCH")){
+            return new BaseResponse<>(BaseResponseStatus.INVALID_TYPE);
+        }
+
+        if(type.equals("SEARCH") && keyword==null){
             return new BaseResponse<>(BaseResponseStatus.EMPTY_KEYWORD_ERROR);
         }
+
+
+
 
         try{
             GetPostsRes posts = postService.getPosts(type, size, page, keyword,userIdx);

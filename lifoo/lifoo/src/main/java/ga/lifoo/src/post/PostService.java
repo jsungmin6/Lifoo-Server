@@ -51,20 +51,27 @@ public class PostService {
     @Transactional
     public GetPostsRes getPosts(String type, Long size, Long page, String keyword, Long userIdx) throws BaseException {
 
-        List<PostListDto> postList = postOrderRepository.findPostList(size, page);
-        System.out.println("postList.getClass() : " + postList.getClass());
-        for (PostListDto postListDto : postList) {
-            System.out.println(postListDto);
-        };
+        List<PostListDto> postList = null;
+        GetPostsRes getPostsRes = null;
 
-        GetPostsRes getPostsRes = new GetPostsRes(postList);
+        //TODO : 람다로 튜닝, 네이티브 쿼리 사용 안하고 할 수 있는지
+        if(type.equals("BASIC")){
+            postList = postOrderRepository.findPostBasicList(size, page);
+            getPostsRes = new GetPostsRes(postList);
+        } else if(type.equals("RANK")){
+            postList = postOrderRepository.findPostRankList(size, page);
+            getPostsRes = new GetPostsRes(postList);
+        } else if(type.equals("USER")){
+            postList = postOrderRepository.findPostUserList(size, page, userIdx);
+            getPostsRes = new GetPostsRes(postList);
+        } else if(type.equals("SEARCH")){
+            postList = postOrderRepository.findPostSearchList(size, page, keyword);
+            getPostsRes = new GetPostsRes(postList);
+        }
 
-        //type = SEARCH
-        //type = USER
-        //type = RANK
-        //type = BASIC
-
-        //쿼리문 통해 게시물 리스트 와 클릭된 이모지수 가져오기.
+        if(postList.isEmpty()){
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_POST_LIST);
+        }
 
         return getPostsRes;
     }

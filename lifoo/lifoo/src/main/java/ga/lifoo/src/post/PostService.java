@@ -137,20 +137,22 @@ public class PostService {
     public void patchPost(Long postIdx, Long userIdx, PostPostsReq postPostsReq) throws BaseException {
 
         //postIdx의 userIdx 와 받은 userIdx가 같은지 권한 검사
-        Optional<Post> post = postRepository.findById(postIdx);
-        Optional<UserInfo> userInfo = userRepository.findById(userIdx);
-        Long postUserIdx = post.get().getUserInfo().getUserIdx();
-        Optional<PostImg> postImg = postImgRepository.findPostImg(postIdx);
-        if(!postUserIdx.equals(userIdx)){
-            throw new BaseException(BaseResponseStatus.NO_AUTHORITY);
-        }
-        if(!userInfo.isPresent()) {
-            throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
-        }
+        Optional<Post> post = postRepository.findByPostIdxAndIsDeleted(postIdx,"N");
         if(!post.isPresent()) {
             throw new BaseException(BaseResponseStatus.INVALID_POST);
         }
 
+        Optional<UserInfo> userInfo = userRepository.findById(userIdx);
+        if(!userInfo.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
+        }
+
+        Long postUserIdx = post.get().getUserInfo().getUserIdx();
+        if(!postUserIdx.equals(userIdx)){
+            throw new BaseException(BaseResponseStatus.NO_AUTHORITY);
+        }
+
+        Optional<PostImg> postImg = postImgRepository.findPostImg(postIdx);
         if(postPostsReq.getPostUrl()!=null){
             postImg.get().setPostUrl(postPostsReq.getPostUrl());
         }

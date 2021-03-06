@@ -101,14 +101,14 @@ public class PostController {
 
 
     /**
-     * 게시물 조회 API
+     * 게시물 상세 조회 API
      * @ResponseBody GetPostDetailRes
      */
     @ResponseBody
     @GetMapping("/posts/{postIdx}")
     public BaseResponse<GetPostDetailRes> getPostDetail(@PathVariable Long postIdx)
     {
-        System.out.println("게시물 조회 API ");
+        System.out.println("게시물 상세 조회 API ");
 
         Long userIdx;
         try {
@@ -124,6 +124,35 @@ public class PostController {
         try{
             GetPostDetailRes postDetail = postService.getPostDetail(postIdx,userIdx);
             return new BaseResponse<>(BaseResponseStatus.SUCCESS,postDetail);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
+    /**
+     * 게시물 삭제 API
+     */
+    @ResponseBody
+    @DeleteMapping("/posts/{postIdx}")
+    public BaseResponse<Void> deletePost(@PathVariable Long postIdx)
+    {
+        System.out.println("게시물 삭제 API ");
+
+        Long userIdx;
+        try {
+            userIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        if(postIdx==null){
+            return new BaseResponse<>(BaseResponseStatus.INVALID_POST);
+        }
+
+        try{
+            postService.deletePost(postIdx,userIdx);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

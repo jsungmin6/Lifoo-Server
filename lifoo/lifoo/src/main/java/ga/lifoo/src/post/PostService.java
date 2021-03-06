@@ -93,7 +93,7 @@ public class PostService {
             throw new BaseException(BaseResponseStatus.INVALID_POST);
         }
 
-        
+
         Long mostImoge;
         List<ImogeListDto> imogeList;
         imogeList = postOrderRepository.findUserClickedImogeList(postIdx,userIdx); //이모지 리스트 구하기
@@ -111,5 +111,25 @@ public class PostService {
         postDetail.setTotalImoge(cnt);
 
         return postDetail;
+    }
+
+    @Transactional
+    public void deletePost(Long postIdx, Long userIdx) throws BaseException {
+        //postIdx의 userIdx 와 받은 userIdx가 같은지 권한 검사
+        Optional<Post> post = postRepository.findById(postIdx);
+        Optional<UserInfo> userInfo = userRepository.findById(userIdx);
+        Long postUserIdx = post.get().getUserInfo().getUserIdx();
+        if(!postUserIdx.equals(userIdx)){
+            throw new BaseException(BaseResponseStatus.NO_AUTHORITY);
+        }
+        if(!userInfo.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
+        }
+        if(!post.isPresent()) {
+            throw new BaseException(BaseResponseStatus.INVALID_POST);
+        }
+        //해당하는 post 받고 set isdelete 하면 됨.
+        post.get().setIsDeleted("Y");
+        //댓글과 이미지 모두 연쇄되어서 삭제하고 싶지만 딱히 그럴 필요는 없을 것 같음(생략)
     }
 }

@@ -132,4 +132,33 @@ public class PostService {
         post.get().setIsDeleted("Y");
         //댓글과 이미지 모두 연쇄되어서 삭제하고 싶지만 딱히 그럴 필요는 없을 것 같음(생략)
     }
+
+    @Transactional
+    public void patchPost(Long postIdx, Long userIdx, PostPostsReq postPostsReq) throws BaseException {
+
+        //postIdx의 userIdx 와 받은 userIdx가 같은지 권한 검사
+        Optional<Post> post = postRepository.findById(postIdx);
+        Optional<UserInfo> userInfo = userRepository.findById(userIdx);
+        Long postUserIdx = post.get().getUserInfo().getUserIdx();
+        Optional<PostImg> postImg = postImgRepository.findPostImg(postIdx);
+        if(!postUserIdx.equals(userIdx)){
+            throw new BaseException(BaseResponseStatus.NO_AUTHORITY);
+        }
+        if(!userInfo.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
+        }
+        if(!post.isPresent()) {
+            throw new BaseException(BaseResponseStatus.INVALID_POST);
+        }
+
+        if(postPostsReq.getPostUrl()!=null){
+            postImg.get().setPostUrl(postPostsReq.getPostUrl());
+        }
+        if(postPostsReq.getPostBody()!=null){
+            post.get().setPostBody(postPostsReq.getPostBody());
+        }
+        if(postPostsReq.getPostTitle()!=null){
+            post.get().setPostTitle(postPostsReq.getPostTitle());
+        }
+    }
 }

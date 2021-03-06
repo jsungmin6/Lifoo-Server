@@ -156,6 +156,30 @@ public class PostController {
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }
+    }
 
+    /**
+     * 게시물 수정 API
+     * @ResponseBody PatchPostReq
+     */
+    @ResponseBody
+    @PatchMapping("/posts/{postIdx}")
+    public BaseResponse<Void> patchPost(@PathVariable Long postIdx,@RequestBody PostPostsReq postPostsReq)
+    {
+        System.out.println("게시물 수정 API ");
+
+        Long userIdx;
+        try {
+            userIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        try{
+            postService.patchPost(postIdx,userIdx,postPostsReq);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 }

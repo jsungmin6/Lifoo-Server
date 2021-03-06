@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.4.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
 }
 
@@ -64,26 +65,30 @@ dependencies {
 
 	//templete
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-//	// DB
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	runtimeOnly 'mysql:mysql-connector-java'
-//
-//	// Security, Authentication
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
-//	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
-//
-//	// Web
-//	implementation 'org.springframework.boot:spring-boot-starter-web'
-//
-//	// Lombok
-//	compileOnly 'org.projectlombok:lombok'
-//	annotationProcessor 'org.projectlombok:lombok'
-//
-//	// Spring Boot Starter
-//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//querydsl 추가
+	implementation 'com.querydsl:querydsl-jpa'
+
 
 }
 
 test {
 	useJUnitPlatform()
+}
+
+//querydsl 추가시작
+def querydslDir ="$buildDir/generated/querydsl"
+
+querydsl {
+	jpa =true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main.java.srcDir querydslDir
+}
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
 }

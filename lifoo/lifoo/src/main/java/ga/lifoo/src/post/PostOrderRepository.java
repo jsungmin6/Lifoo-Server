@@ -1,15 +1,17 @@
 package ga.lifoo.src.post;
 
-import ga.lifoo.src.post.models.PostListDto;
+import ga.lifoo.src.post.models.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -176,4 +178,95 @@ public class PostOrderRepository {
 
         return result;
     }
+
+    public List<ImogeListDto> findUserClickedImogeList(Long postIdx, Long userIdx) {
+        String sql =
+                "select i.imoge_idx, IFNULL(ui.is_clicked,'N') as isImogeClicked " +
+                        "from imoge as i " +
+                        "left join " +
+                        "   (select imoge_idx, is_clicked " +
+                        "   from user_imoge " +
+                        "   where is_clicked = 'Y' and post_idx = :postIdx and user_idx = :userIdx) as ui " +
+                        "on i.imoge_idx = ui.imoge_idx";
+
+        Query nativeQuery = em.createNativeQuery(sql)
+                .setParameter("userIdx", userIdx)
+                .setParameter("postIdx", postIdx);
+
+        List<Object[]> resultList = nativeQuery.getResultList();
+
+        List<ImogeListDto> collect = resultList.stream()
+                .map(m -> new ImogeListDto((BigInteger) m[0], (String) m[1]))
+                .collect(Collectors.toList());
+
+        return collect;
+    }
+
+    public GetPostDetailRes findPostDetail(Long postIdx){
+        String sql =
+                "select p.post_idx,p.post_title,p.post_body,p.user_idx,u.nickname,p.created_at,pi.post_url from post as p " +
+                        "join post_img pi " +
+                        "on p.post_idx = pi.post_idx " +
+                        "join userInfo u " +
+                        "on p.user_idx = u.user_idx " +
+                        "where p.post_idx = :postIdx ";
+
+        Query nativeQuery = em.createNativeQuery(sql)
+                .setParameter("postIdx", postIdx);
+
+        Object[] singleResult = (Object[])nativeQuery.getSingleResult();
+
+        BigInteger post_idx = (BigInteger) singleResult[0];
+        String post_title = (String) singleResult[1];
+        String post_body = (String) singleResult[2];
+        BigInteger user_idx = (BigInteger) singleResult[3];
+        String nickname = (String) singleResult[4];
+        Timestamp created_at = (Timestamp) singleResult[5];
+        String post_url = (String) singleResult[6];
+
+        GetPostDetailRes getPostDetailRes = new GetPostDetailRes(post_idx, post_title, post_body, user_idx, nickname, created_at, post_url);
+
+        return getPostDetailRes;
+    }
+
+    public Long gettotalImogeCount(Long postIdx) {
+        Long cnt = em.createQuery(
+                "select count(ui) " +
+                        "from UserImoge ui " +
+                        "where ui.isClicked = 'Y' and ui.post.postIdx = :postIdx ", Long.class)
+                .setParameter("postIdx", postIdx)
+                .getSingleResult();
+        return cnt;
+    }
+
+    public Long getMostImoge(Long postIdx) {
+        Query query = em.createQuery(
+                "select count(ui) as cnt, ui.imoge.imogeIdx " +
+                        "from UserImoge ui " +
+                        "where ui.isClicked = 'Y' and ui.post.postIdx = :postIdx " +
+                        "group by ui.imoge.imogeIdx " +
+                        "order by cnt desc")
+                .setParameter("postIdx", postIdx)
+                .setMaxResults(1);
+
+        Object[]  singleResult = (Object[]) query.getSingleResult();
+
+        return (Long)singleResult[1];
+
+    }
+
+
+    //TODO : JPQL 포기
+//    public GetPostDetailRes findPostDetail(Long postIdx) {
+//        GetPostDetailRes result = em.createQuery(
+//                "select new ga.lifoo.src.post.models.GetPostDetailRes(p.postIdx, p.postTitle,p.postBody,ui.userIdx,ui.nickname,p.createdAt,pi.postUrl) " +
+//                        "from PostImg pi " +
+//                        "join fetch pi.post p " +
+//                        "join fetch p.userInfo ui " +
+//                        "where p.postIdx = :postIdx", GetPostDetailRes.class)
+//                .setParameter("postIdx", postIdx)
+//                .getSingleResult();
+//
+//        return result;
+//    }
 }

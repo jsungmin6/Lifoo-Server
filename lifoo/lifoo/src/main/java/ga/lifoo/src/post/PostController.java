@@ -4,6 +4,7 @@ package ga.lifoo.src.post;
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponse;
 import ga.lifoo.config.BaseResponseStatus;
+import ga.lifoo.src.post.models.GetPostDetailRes;
 import ga.lifoo.src.post.models.GetPostsRes;
 import ga.lifoo.src.post.models.PostPostsReq;
 import ga.lifoo.src.user.models.PostUserReq;
@@ -82,21 +83,47 @@ public class PostController {
         if(page==null){
             return new BaseResponse<>(BaseResponseStatus.EMPTY_PAGE_ERROR);
         }
-
         if(!type.equals("BASIC") && !type.equals("RANK") && !type.equals("USER") && !type.equals("SEARCH")){
             return new BaseResponse<>(BaseResponseStatus.INVALID_TYPE);
         }
-
         if(type.equals("SEARCH") && keyword==null){
             return new BaseResponse<>(BaseResponseStatus.EMPTY_KEYWORD_ERROR);
         }
 
-
-
-
         try{
             GetPostsRes posts = postService.getPosts(type, size, page, keyword,userIdx);
             return new BaseResponse<>(BaseResponseStatus.SUCCESS,posts);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
+
+    /**
+     * 게시물 조회 API
+     * @ResponseBody GetPostDetailRes
+     */
+    @ResponseBody
+    @GetMapping("/posts/{postIdx}")
+    public BaseResponse<GetPostDetailRes> getPostDetail(@PathVariable Long postIdx)
+    {
+        System.out.println("게시물 조회 API ");
+
+        Long userIdx;
+        try {
+            userIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        if(postIdx==null){
+            return new BaseResponse<>(BaseResponseStatus.INVALID_POST);
+        }
+
+        try{
+            GetPostDetailRes postDetail = postService.getPostDetail(postIdx,userIdx);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS,postDetail);
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

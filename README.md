@@ -7,6 +7,7 @@
 - 음식사진 커뮤니티 앱
 
 - [API 명세서](https://documenter.getpostman.com/view/11807633/TWDXmvw7)
+- [ERD 설계](https://aquerytool.com:443/aquerymain/index/?rurl=0b5a02f2-5135-42d1-8e1b-0e43ece1ac94) 암호 : 732cx7
 
 ### 2. 기능
 
@@ -14,10 +15,10 @@
   - 사진, 글 업로드
   - 다양한 이모지 표시 기능(like 좋아요)
   - 게시물 필터 기능
-  - 신고 기능
+  - 신고 기능 (예정)
 - 댓글
-  - 신고 기능
-  - 좋아요 기능
+  - 신고 기능 (예정)
+  - 좋아요 기능 (예정)
 - 회원
   - 카카오 로그인
   - 랜덤 닉네임 생성 기능

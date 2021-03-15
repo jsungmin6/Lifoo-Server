@@ -25,7 +25,7 @@
 
 ### 3. 기술
 
-- Spring boot, Spring Data Jpa, Spring Sequrity, Nginx, EC2, RDS
+- Spring boot, Spring Data Jpa, Spring Sequrity, Nginx, EC2, RDS, QueryDsl(사용예정), Native Query, Jpql
 
 ### 4. 문제와 해결
 

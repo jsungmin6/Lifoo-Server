@@ -45,4 +45,11 @@ public class Comment extends BaseEntity {
      */
     @Column(name = "comment_body")
     private String commentBody;
+
+    public Comment(UserInfo userInfo, Post post, String commentBody) {
+        this.userInfo = userInfo;
+        this.post = post;
+        this.commentBody = commentBody;
+    }
+
 }

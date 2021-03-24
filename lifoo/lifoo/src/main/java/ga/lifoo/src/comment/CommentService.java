@@ -103,4 +103,44 @@ public class CommentService {
         }
 
     }
+
+    public void putComment(Long commentIdx, Long userIdx, PutCommentReq putCommentReq) throws BaseException {
+
+        Optional<UserInfo> userInfo = userRepository.findById(userIdx);
+        Optional<Comment> findComment = commentRepository.findById(commentIdx);
+        if(!userInfo.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
+        }
+        if(!findComment.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_COMMENT);
+        }
+        Long findUserIdx = findComment.get().getUserInfo().getUserIdx();
+        if(!findUserIdx.equals(userIdx)){
+            throw new BaseException(BaseResponseStatus.NO_AUTHORITY);
+        }
+
+        String commentBody = putCommentReq.getCommentBody();
+
+        findComment.get().setCommentBody(commentBody);
+
+    }
+
+    public void deleteComment(Long commentIdx, Long userIdx) throws BaseException {
+        Optional<UserInfo> userInfo = userRepository.findById(userIdx);
+        Optional<Comment> findComment = commentRepository.findById(commentIdx);
+        if(!userInfo.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_USER);
+        }
+        if(!findComment.isPresent()) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_COMMENT);
+        }
+
+        Long findUserIdx = findComment.get().getUserInfo().getUserIdx();
+        if(!findUserIdx.equals(userIdx)){
+            throw new BaseException(BaseResponseStatus.NO_AUTHORITY);
+        }
+
+        findComment.get().setIsDeleted("Y");
+
+    }
 }

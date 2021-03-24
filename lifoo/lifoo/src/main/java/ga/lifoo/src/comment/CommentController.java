@@ -5,9 +5,11 @@ import ga.lifoo.config.BaseResponse;
 import ga.lifoo.config.BaseResponseStatus;
 import ga.lifoo.src.comment.models.GetCommentRes;
 import ga.lifoo.src.comment.models.PostCommentReq;
+import ga.lifoo.src.comment.models.PutCommentReq;
 import ga.lifoo.src.imoge.ImogeService;
 import ga.lifoo.src.imoge.models.PostImogeReq;
 import ga.lifoo.src.post.models.GetPostsRes;
+import ga.lifoo.src.post.models.PostPostsReq;
 import ga.lifoo.util.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -117,4 +119,68 @@ public class CommentController {
         }
 
     }
+
+    /**
+     * 댓글 수정 API
+     * @ResponseBody putCommentReq
+     */
+    @ResponseBody
+    @PutMapping("/comments/{commentIdx}")
+    public BaseResponse<Void> putComment(@PathVariable Long commentIdx, @RequestBody PutCommentReq putCommentReq)
+    {
+        System.out.println("댓글 수정 API ");
+
+        Long userIdx;
+        try {
+            userIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        if(commentIdx==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_COMMENT_IDX_ERROR);
+        }
+        if(putCommentReq.getCommentBody()==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_COMMENT_BODY_ERROR);
+        }
+
+
+        try{
+            commentService.putComment(commentIdx,userIdx,putCommentReq);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 댓글 삭제 API
+     * @ResponseBody putCommentReq
+     */
+    @ResponseBody
+    @DeleteMapping("/comments/{commentIdx}")
+    public BaseResponse<Void> putComment(@PathVariable Long commentIdx)
+    {
+        System.out.println("댓글 삭제 API");
+
+        Long userIdx;
+        try {
+            userIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        if(commentIdx==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_COMMENT_IDX_ERROR);
+        }
+
+
+        try{
+            commentService.deleteComment(commentIdx,userIdx);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
 }

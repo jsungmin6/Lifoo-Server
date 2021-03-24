@@ -67,9 +67,11 @@ public enum  BaseResponseStatus {
     INVALID_POST_TITLE(false, 3205, "제목 형식이 아닙니다."),
     INVALID_IMOGE(false, 3206, "존재하지 않는 이모지입니다."),
     INVALID_POST(false, 3207, "존재하지 않는 게시물입니다."),
+
     NOT_EXIST_POST_LIST(false, 3208, "게시물 목록이 없습니다."),
     NOT_EXIST_ALARM_LIST(false, 3209, "알림 목록이 없습니다."),
-
+    NOT_EXIST_COMMENT_LIST(false, 3210, "댓글 목록이 없습니다."),
+    NOT_EXIST_COMMENT(false, 3211, "존재하지 않는 댓글입니다."),
     NO_AUTHORITY(false, 3300, "권한이 없습니다."),
 
     JSON_PROCESSING_ERROR(false, 3400, "JsonProcessingException 에러 입니다."),

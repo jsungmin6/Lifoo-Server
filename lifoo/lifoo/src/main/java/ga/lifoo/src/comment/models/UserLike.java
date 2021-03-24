@@ -1,10 +1,11 @@
-package ga.lifoo.src.user.models;
+package ga.lifoo.src.comment.models;
 
 
 import ga.lifoo.config.BaseEntity;
 import ga.lifoo.src.comment.models.Comment;
 import ga.lifoo.src.imoge.models.Imoge;
 import ga.lifoo.src.post.models.Post;
+import ga.lifoo.src.user.models.UserInfo;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,4 +47,10 @@ public class UserLike extends BaseEntity {
      */
     @Column(name = "is_clicked", columnDefinition = "char(1) default 'Y'")
     private String isClicked;
+
+    public UserLike(UserInfo userInfo, Comment comment, String isClicked) {
+        this.userInfo = userInfo;
+        this.comment = comment;
+        this.isClicked = isClicked;
+    }
 }

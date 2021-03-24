@@ -3,15 +3,14 @@ package ga.lifoo.src.comment;
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponse;
 import ga.lifoo.config.BaseResponseStatus;
+import ga.lifoo.src.comment.models.GetCommentRes;
 import ga.lifoo.src.comment.models.PostCommentReq;
 import ga.lifoo.src.imoge.ImogeService;
 import ga.lifoo.src.imoge.models.PostImogeReq;
+import ga.lifoo.src.post.models.GetPostsRes;
 import ga.lifoo.util.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,6 +45,72 @@ public class CommentController {
 
         try{
             commentService.createComment(postCommentReq,userIdx);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+    /**
+     * 댓글 조회 API
+     * @ResponseBody GetPostsRes
+     */
+    @ResponseBody
+    @GetMapping("/posts/{postIdx}/comments")
+    public BaseResponse<GetCommentRes> getComments(@PathVariable Long postIdx,
+                                                   @RequestParam(value = "size", required = false) Long size,
+                                                   @RequestParam(value = "page", required = false) Long page)
+    {
+        System.out.println("댓글 조회 API ");
+
+        Long jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        if(size==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_SIZE_ERROR);
+        }
+        if(page==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_PAGE_ERROR);
+        }
+        if(postIdx==null){
+            return new BaseResponse<>(BaseResponseStatus.INVALID_POST);
+        }
+
+        try{
+            GetCommentRes comments = commentService.getComments(size, page, postIdx, jwtUserIdx);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS,comments);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
+
+    /**
+     * 댓글 좋아요 API
+     * @ResponseBody Void
+     */
+    @ResponseBody
+    @PostMapping("/comments/{commentIdx}/likes")
+    public BaseResponse<Void> postLike(@PathVariable Long commentIdx)
+    {
+        System.out.println("start : 댓글 좋아요 API");
+
+        Long userIdx;
+        try {
+            userIdx = jwtService.getUserId();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+
+        try{
+            commentService.postLike(commentIdx,userIdx);
             return new BaseResponse<>(BaseResponseStatus.SUCCESS);
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());

@@ -51,7 +51,7 @@ public class UserImoge extends BaseEntity {
      * 이모지 클릭 여부
      */
     @Column(name = "is_clicked", columnDefinition = "char(1) default 'Y'")
-    private String isClicked;
+    private String isClicked = "Y";
 
     public UserImoge(UserInfo userInfo, Imoge imoge, Post post) {
         this.userInfo = userInfo;

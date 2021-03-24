@@ -46,4 +46,10 @@ public class Report extends BaseEntity {
     @Column(name = "target_idx")
     private Long targetIdx;
 
+    public Report(UserInfo userInfo, ReportStatus status, Long targetIdx) {
+        this.userInfo = userInfo;
+        this.status = status;
+        this.targetIdx = targetIdx;
+    }
+
 }

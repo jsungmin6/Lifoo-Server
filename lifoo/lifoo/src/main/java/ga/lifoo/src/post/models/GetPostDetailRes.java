@@ -10,19 +10,19 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class GetPostDetailRes {
-    private BigInteger postIdx;
+    private Integer postIdx;
     private String postTitle;
     private String postBody;
-    private BigInteger hostUserIdx;
+    private Integer hostUserIdx;
     private String hostNickname;
     private Long totalImoge;
     private String postUrl;
-    private Timestamp createdAt;
+    private String createdAt;
     private Long mostImoge;
     private List<ImogeListDto> imogeList;
 
 
-    public GetPostDetailRes(BigInteger postIdx, String postTitle, String postBody, BigInteger hostUserIdx, String hostNickname, Timestamp createdAt, String postUrl) {
+    public GetPostDetailRes(Integer postIdx, String postTitle, String postBody, Integer hostUserIdx, String hostNickname, String createdAt, String postUrl) {
         this.postIdx = postIdx;
         this.postTitle = postTitle;
         this.postBody = postBody;

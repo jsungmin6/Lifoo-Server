@@ -6,9 +6,9 @@ import java.util.List;
 
 @Data
 public class GetAlarmList {
-    private List<AlarmListDto> alarmList;
+    private List<AlarmListDtoV2> alarmList;
 
-    public GetAlarmList(List<AlarmListDto> alarmList) {
+    public GetAlarmList(List<AlarmListDtoV2> alarmList) {
         this.alarmList = alarmList;
     }
 }

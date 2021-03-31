@@ -46,8 +46,8 @@ public class CommentOrderReopository {
         List<Object[]> resultList = nativeQuery.getResultList();
 
         List<CommentList> collect = resultList.stream()
-                .map(m -> new CommentList((BigInteger) m[0],
-                                            (BigInteger) m[1],
+                .map(m -> new CommentList((Integer) m[0],
+                                            (Integer) m[1],
                                             (String) m[2],
                                             (String) m[3],
                                             (BigInteger) m[4],

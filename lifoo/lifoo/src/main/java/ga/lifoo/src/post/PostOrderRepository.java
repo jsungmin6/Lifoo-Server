@@ -9,9 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -19,6 +18,7 @@ import java.util.stream.Collectors;
 public class PostOrderRepository {
 
     private final EntityManager em;
+
 
     public List<PostListDto> findPostBasicList(Long size,Long page) {
         Long offset = page * size;
@@ -45,16 +45,36 @@ public class PostOrderRepository {
 
         List<PostListDto> result = new ArrayList<>();
 
+
+        SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.KOREA);
+        datetime.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
         for (Object[] objects : resultList) {
-            BigInteger post_idx = (BigInteger) objects[0];
+
+            System.out.println("objects[0]"+objects[0].getClass());
+            System.out.println("objects[1]"+objects[1].getClass());
+            System.out.println("objects[2]"+objects[2].getClass());
+            System.out.println("objects[3]"+objects[3].getClass());
+            System.out.println("objects[4]"+objects[4].getClass());
+
+            Integer post_idx = (Integer) objects[0];
             String post_title = (String) objects[1];
             BigInteger cnt = (BigInteger) objects[2];
             String post_url = (String) objects[3];
             Timestamp created_at = (Timestamp) objects[4];
 
-            PostListDto postListDto = new PostListDto(post_idx, post_title, cnt, post_url, created_at);
+
+            String postDate = datetime.format(created_at);
+
+            System.out.println("created_at : "+created_at);
+
+            PostListDto postListDto = new PostListDto(post_idx, post_title, cnt, post_url, postDate);
+
+            System.out.println("postListDto : " + postListDto);
             result.add(postListDto);
         }
+
+        System.out.println("result : "+result);
 
         return result;
     }
@@ -84,14 +104,20 @@ public class PostOrderRepository {
 
         List<PostListDto> result = new ArrayList<>();
 
+        SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.KOREA);
+        datetime.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
         for (Object[] objects : resultList) {
-            BigInteger post_idx = (BigInteger) objects[0];
+            Integer post_idx = (Integer) objects[0];
             String post_title = (String) objects[1];
             BigInteger cnt = (BigInteger) objects[2];
             String post_url = (String) objects[3];
             Timestamp created_at = (Timestamp) objects[4];
 
-            PostListDto postListDto = new PostListDto(post_idx, post_title, cnt, post_url, created_at);
+
+            String postDate = datetime.format(created_at);
+
+            PostListDto postListDto = new PostListDto(post_idx, post_title, cnt, post_url, postDate);
             result.add(postListDto);
         }
 
@@ -124,14 +150,19 @@ public class PostOrderRepository {
 
         List<PostListDto> result = new ArrayList<>();
 
+        SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.KOREA);
+        datetime.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
         for (Object[] objects : resultList) {
-            BigInteger post_idx = (BigInteger) objects[0];
+            Integer post_idx = (Integer) objects[0];
             String post_title = (String) objects[1];
             BigInteger cnt = (BigInteger) objects[2];
             String post_url = (String) objects[3];
             Timestamp created_at = (Timestamp) objects[4];
 
-            PostListDto postListDto = new PostListDto(post_idx, post_title, cnt, post_url, created_at);
+            String postDate = datetime.format(created_at);
+
+            PostListDto postListDto = new PostListDto(post_idx, post_title, cnt, post_url, postDate);
             result.add(postListDto);
         }
 
@@ -165,14 +196,20 @@ public class PostOrderRepository {
 
         List<PostListDto> result = new ArrayList<>();
 
+        SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.KOREA);
+        datetime.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+
         for (Object[] objects : resultList) {
-            BigInteger post_idx = (BigInteger) objects[0];
+            Integer post_idx = (Integer) objects[0];
             String post_title = (String) objects[1];
             BigInteger cnt = (BigInteger) objects[2];
             String post_url = (String) objects[3];
             Timestamp created_at = (Timestamp) objects[4];
 
-            PostListDto postListDto = new PostListDto(post_idx, post_title, cnt, post_url, created_at);
+            String postDate = datetime.format(created_at);
+
+            PostListDto postListDto = new PostListDto(post_idx, post_title, cnt, post_url, postDate);
             result.add(postListDto);
         }
 
@@ -196,7 +233,7 @@ public class PostOrderRepository {
         List<Object[]> resultList = nativeQuery.getResultList();
 
         List<ImogeListDto> collect = resultList.stream()
-                .map(m -> new ImogeListDto((BigInteger) m[0], (String) m[1]))
+                .map(m -> new ImogeListDto((Integer) m[0], (String) m[1]))
                 .collect(Collectors.toList());
 
         return collect;
@@ -216,15 +253,20 @@ public class PostOrderRepository {
 
         Object[] singleResult = (Object[])nativeQuery.getSingleResult();
 
-        BigInteger post_idx = (BigInteger) singleResult[0];
+        SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.KOREA);
+        datetime.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+        Integer post_idx = (Integer) singleResult[0];
         String post_title = (String) singleResult[1];
         String post_body = (String) singleResult[2];
-        BigInteger user_idx = (BigInteger) singleResult[3];
+        Integer user_idx = (Integer) singleResult[3];
         String nickname = (String) singleResult[4];
         Timestamp created_at = (Timestamp) singleResult[5];
         String post_url = (String) singleResult[6];
 
-        GetPostDetailRes getPostDetailRes = new GetPostDetailRes(post_idx, post_title, post_body, user_idx, nickname, created_at, post_url);
+        String postDate = datetime.format(created_at);
+
+        GetPostDetailRes getPostDetailRes = new GetPostDetailRes(post_idx, post_title, post_body, user_idx, nickname, postDate, post_url);
 
         return getPostDetailRes;
     }

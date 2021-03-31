@@ -92,6 +92,12 @@ public class PostController {
 
         try{
             GetPostsRes posts = postService.getPosts(type, size, page, keyword,userIdx);
+            System.out.println("posts :" + posts);
+            BaseResponse<GetPostsRes> test = new BaseResponse<>(BaseResponseStatus.SUCCESS,posts);
+            GetPostsRes result = test.getResult();
+            System.out.println("test : "+test);
+            System.out.println("test,result" + result);
+
             return new BaseResponse<>(BaseResponseStatus.SUCCESS,posts);
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());

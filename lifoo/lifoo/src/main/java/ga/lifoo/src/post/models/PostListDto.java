@@ -7,13 +7,13 @@ import java.sql.Timestamp;
 
 @Data
 public class PostListDto {
-    private BigInteger postIdx;
+    private Integer postIdx;
     private String postTitle;
     private BigInteger totalImoge;
     private String postUrl;
-    private Timestamp createdAt;
+    private String createdAt;
 
-    public PostListDto(BigInteger postIdx, String postTitle, BigInteger totalImoge, String postUrl, Timestamp createdAt) {
+    public PostListDto(Integer postIdx, String postTitle, BigInteger totalImoge, String postUrl, String createdAt) {
         this.postIdx = postIdx;
         this.postTitle = postTitle;
         this.totalImoge = totalImoge;

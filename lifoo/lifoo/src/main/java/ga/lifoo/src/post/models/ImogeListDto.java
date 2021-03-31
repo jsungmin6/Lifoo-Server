@@ -6,10 +6,10 @@ import java.math.BigInteger;
 
 @Data
 public class ImogeListDto {
-    private BigInteger imogeIdx;
+    private Integer imogeIdx;
     private String isImogeClicked;
 
-    public ImogeListDto(BigInteger imogeIdx, String isImogeClicked) {
+    public ImogeListDto(Integer imogeIdx, String isImogeClicked) {
         this.imogeIdx = imogeIdx;
         this.isImogeClicked = isImogeClicked;
     }

@@ -74,6 +74,8 @@ public class PostService {
             throw new BaseException(BaseResponseStatus.NOT_EXIST_POST_LIST);
         }
 
+        System.out.println("getPostsRes : "+getPostsRes);
+
         return getPostsRes;
     }
 

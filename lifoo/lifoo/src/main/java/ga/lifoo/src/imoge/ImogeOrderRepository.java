@@ -35,7 +35,7 @@ public class ImogeOrderRepository {
         List<Object[]> resultList = nativeQuery.getResultList();
 
         List<ImogeListDto> collect = resultList.stream()
-                .map(m -> new ImogeListDto((BigInteger) m[0], (BigInteger) m[1]))
+                .map(m -> new ImogeListDto((Integer) m[0], (BigInteger) m[1]))
                 .collect(Collectors.toList());
 
         return collect;

@@ -17,4 +17,8 @@ public interface UserRepository extends JpaRepository<UserInfo, Long> {
     //userIdx로 user 찾기
     Optional<UserInfo> findByUserIdxAndIsDeleted(Long userIdx, String isDeleted);
 
+    @Query("select ui from UserInfo ui where ui.id = :id and ui.isDeleted = 'N'")
+    Optional<UserInfo> findUserId(@Param("id") String id);
+
+
 }

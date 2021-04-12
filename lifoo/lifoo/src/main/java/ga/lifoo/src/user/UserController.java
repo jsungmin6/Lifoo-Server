@@ -1,21 +1,12 @@
 package ga.lifoo.src.user;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import ga.lifoo.config.BaseException;
 import ga.lifoo.config.BaseResponse;
 import ga.lifoo.config.BaseResponseStatus;
 import ga.lifoo.src.user.models.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ga.lifoo.util.JwtService;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
 @RestController
@@ -68,6 +59,45 @@ public class UserController {
         }
 
     }
+
+
+    /**
+     * 로컬 회원가입 API
+     * @RequestBody PostLocalUserReq
+     * @ResponseBody PostLocalUSerRes
+     */
+    @ResponseBody
+    @PostMapping("/users/local")
+    public BaseResponse<PostLocalUserRes> postUsers(@RequestBody PostLocalUserReq postLocalUserReq)
+    {
+        System.out.println("start : 로컬 회원가입 API");
+
+        if(postLocalUserReq.getNickname()==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_NICNAME_ERROR);
+        }
+        if(postLocalUserReq.getPassword()==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_PASSWORD);
+        }
+        if(postLocalUserReq.getPasswordCheck()==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_PASSWORD_CHECK);
+        }
+        if(postLocalUserReq.getId()==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_ID);
+        }
+        if(!postLocalUserReq.getPassword().equals(postLocalUserReq.getPasswordCheck())){
+            return new BaseResponse<>(BaseResponseStatus.DIFF_PASSWORD_CHECK);
+        }
+
+        try{
+            PostLocalUserRes postUserRes=userService.createLocalUser(postLocalUserReq);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS,postUserRes);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
+
 
     /**
      * 회원정보 수정 API
@@ -213,9 +243,35 @@ public class UserController {
 
     }
 
+    /**
+     * 로컬 로그인 api
+     * @RequestBody postLocalUserLoginReq
+     * @ResponseBody PostKakaoLoginRes
+     * @throws BaseException
+     */
+    @ResponseBody
+    @PostMapping("/login/local")
+    public BaseResponse<PostLocalUserLoginRes> postLocalUserLogin(@RequestBody PostLocalUserLoginReq postLocalUserLoginReq) {
+
+        if(postLocalUserLoginReq.getId()==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_ID);
+        }
+        if(postLocalUserLoginReq.getPassword()==null){
+            return new BaseResponse<>(BaseResponseStatus.EMPTY_PASSWORD);
+        }
+
+        try{
+            PostLocalUserLoginRes localUserInfo = userService.postLocalUserLogin(postLocalUserLoginReq);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS, localUserInfo);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
 
     /**
-     * 카카오톡 로그인 api
+     * 닉네임 생성 api
      * @RequestBody PostKakaoLoginReq
      * @ResponseBody PostKakaoLoginRes
      */

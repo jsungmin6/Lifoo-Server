@@ -40,9 +40,31 @@ public class UserInfo extends BaseEntity {
     @Column(name = "nickname")
     private String nickname;
 
+    /**
+     * 패스워드
+     */
+    @Column(name = "password")
+    private String password;
+
+    /**
+     * 아이디
+     */
+    @Column(name = "id")
+    private String id;
+
+
     public UserInfo(LoginType loginType, String snsId, String nickname) {
         this.loginType = loginType;
         this.snsId = snsId;
         this.nickname = nickname;
     }
+
+    public UserInfo(LoginType loginType, String id, String password, String nickname) {
+        this.loginType = loginType;
+        this.id = id;
+        this.nickname = nickname;
+        this.password = password;
+    }
+
+
 }

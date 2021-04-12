@@ -1,32 +1,20 @@
 package ga.lifoo.src.user;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import ga.lifoo.config.BaseException;
-import ga.lifoo.config.BaseResponse;
 import ga.lifoo.config.BaseResponseStatus;
 import ga.lifoo.src.user.models.*;
 import ga.lifoo.util.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Optional;
 
 import static ga.lifoo.util.RandomNickname.makeNickName;
@@ -44,8 +32,7 @@ public class UserService {
      */
     @Transactional
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
-
-        //중복 snsId를 가진 유저가 있는지 확인
+        //중복 Id를 가진 유저가 있는지 확인
         Optional<UserInfo> findSnsId = userRepository.findBySnsIdAndIsDeleted(postUserReq.getSnsId(),"N");
         if(findSnsId.isPresent()) {
             throw new BaseException(BaseResponseStatus.ALREADY_SNSID_ERROR);
@@ -71,6 +58,7 @@ public class UserService {
         //jwt생성
         String jwt=jwtService.createJwt(id);
         return new PostUserRes(jwt,id);
+
     }
 
     @Transactional
@@ -187,6 +175,50 @@ public class UserService {
         }
 
         return new GetNicknameRes(nickName);
+
+    }
+
+    @Transactional
+    public PostLocalUserRes createLocalUser(PostLocalUserReq postLocalUserReq) throws BaseException {
+
+        //중복 snsId를 가진 유저가 있는지 확인
+        Optional<UserInfo> userId = userRepository.findUserId(postLocalUserReq.getId());
+        if(userId.isPresent()) {
+            throw new BaseException(BaseResponseStatus.EXIST_ID);
+        }
+
+        //중복 nickname인지 확인
+        Optional<UserInfo> findNickname = userRepository.findByNicknameAndIsDeleted(postLocalUserReq.getNickname(),"N");
+        if(findNickname.isPresent()) {
+            throw new BaseException(BaseResponseStatus.ALREADY_NICKNAME_ERROR);
+        }
+
+        //가입
+        UserInfo userInfo = new UserInfo(LoginType.LOCAL, postLocalUserReq.getId(), postLocalUserReq.getPassword(),postLocalUserReq.getNickname());
+        UserInfo saveUserInfo = userRepository.save(userInfo);
+        Long id = saveUserInfo.getUserIdx();
+
+        //jwt생성
+        String jwt=jwtService.createJwt(id);
+        return new PostLocalUserRes(jwt,id);
+
+    }
+
+    @Transactional
+    public PostLocalUserLoginRes postLocalUserLogin(PostLocalUserLoginReq postLocalUserLoginReq) throws BaseException {
+
+        //중복 snsId를 가진 유저가 있는지 확인
+        Optional<UserInfo> findUserInfo = userRepository.findUserId(postLocalUserLoginReq.getId());
+        UserInfo userInfo = findUserInfo.get();
+        String findPasswordById = userInfo.getPassword();
+        if(!findPasswordById.equals(postLocalUserLoginReq.getPassword())){
+            throw new BaseException(BaseResponseStatus.NOT_MATCH_PASSWORD);
+        }
+
+        //jwt토큰 생성
+        Long userIdx = findUserInfo.get().getUserIdx();
+        String jwt = jwtService.createJwt(userIdx);
+        return new PostLocalUserLoginRes(userIdx,jwt);
 
     }
 }

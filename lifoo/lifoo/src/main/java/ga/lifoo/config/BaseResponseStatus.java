@@ -17,7 +17,6 @@ public enum  BaseResponseStatus {
     EMPTY_JWT(false, 2010, "JWT를 입력해주세요."),
     EMPTY_EMAIL(false, 2020, "이메일을 입력해주세요."),
     INVALID_EMAIL(false, 2021, "이메일 형식을 확인해주세요."),
-    EMPTY_PASSWORD(false, 2030, "비밀번호를 입력해주세요."),
     EMPTY_CONFIRM_PASSWORD(false, 2031, "비밀번호 확인을 입력해주세요."),
     WRONG_PASSWORD(false, 2032, "비밀번호를 다시 입력해주세요."),
     DO_NOT_MATCH_PASSWORD(false, 2033, "비밀번호와 비밀번호확인 값이 일치하지 않습니다."),
@@ -52,6 +51,11 @@ public enum  BaseResponseStatus {
     EMPTY_SNSID_ERROR(false, 3014, "snsId를 입력해주세요."),
     EMPTY_USERIDX_ERROR(false, 3015, "userIdx를 입력해주세요."),
     EMPTY_ACCESSTOKEN_ERROR(false, 3016, "access-token을 입력해 주세요."),
+    DIFF_PASSWORD_CHECK(false, 3017, "2차 비밀번호가 다릅니다."),
+    EMPTY_PASSWORD(false, 3018, "비밀번호를 입력해주세요"),
+    EMPTY_PASSWORD_CHECK(false, 3019, "2차 비밀번호를 입력해주세요"),
+    EMPTY_ID(false, 3020, "아이디를 입력해주세요"),
+    NOT_MATCH_PASSWORD(false, 3021, "비밀번호가 일치하지 않습니다."),
 
     ALREADY_NICKNAME_ERROR(false, 3100, "이미 존재하는 닉네임 입니다."),
     ALREADY_USER_ERROR(false, 3101, "이미 존재하는 회원입니다."),
@@ -73,6 +77,7 @@ public enum  BaseResponseStatus {
     NOT_EXIST_COMMENT_LIST(false, 3210, "댓글 목록이 없습니다."),
     NOT_EXIST_COMMENT(false, 3211, "존재하지 않는 댓글입니다."),
     INVALID_REPORT_TYPE(false, 3212, "신고 종류 형식이 아닙니다."),
+    EXIST_ID(false, 3213, "중복된 아이디 입니다."),
 
     NO_AUTHORITY(false, 3300, "권한이 없습니다."),
 

@@ -64,8 +64,4 @@
 
 ### 5. UI
 
-<img src="https://user-images.githubusercontent.com/59005171/114740627-fbc27080-9d84-11eb-93e8-c929e40d694b.PNG" width="300" height="600">
-<img src="https://user-images.githubusercontent.com/59005171/114740742-17c61200-9d85-11eb-8d4c-ac3586eddb93.PNG " width="300" height="600">
-<img src="https://user-images.githubusercontent.com/59005171/114740746-18f73f00-9d85-11eb-8f4a-daea9a22fb45.PNG " width="300" height="600">
-<img src="https://user-images.githubusercontent.com/59005171/114740748-18f73f00-9d85-11eb-8459-8ad80de1f102.PNG" width="300" height="600">
-<img src="https://user-images.githubusercontent.com/59005171/114740753-198fd580-9d85-11eb-9f74-ecec0d76b7ea.PNG" width="300" height="600">
+<img src="https://user-images.githubusercontent.com/59005171/114740627-fbc27080-9d84-11eb-93e8-c929e40d694b.PNG" width="300" height="600"><img src="https://user-images.githubusercontent.com/59005171/114740742-17c61200-9d85-11eb-8d4c-ac3586eddb93.PNG " width="300" height="600"><img src="https://user-images.githubusercontent.com/59005171/114740746-18f73f00-9d85-11eb-8f4a-daea9a22fb45.PNG " width="300" height="600"><img src="https://user-images.githubusercontent.com/59005171/114740748-18f73f00-9d85-11eb-8459-8ad80de1f102.PNG" width="300" height="600"><img src="https://user-images.githubusercontent.com/59005171/114740753-198fd580-9d85-11eb-9f74-ecec0d76b7ea.PNG" width="300" height="600">

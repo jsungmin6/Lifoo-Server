@@ -8,6 +8,7 @@
 
 - [API 명세서](https://documenter.getpostman.com/view/11807633/TWDXmvw7)
 - [ERD 설계](https://aquerytool.com:443/aquerymain/index/?rurl=0b5a02f2-5135-42d1-8e1b-0e43ece1ac94) 암호 : 732cx7
+- [다운로드 링크](https://play.google.com/store/apps/details?id=com.googoocorn.lifoo&hl=ko&gl=US)
 
 ### 2. 기능
 
@@ -20,7 +21,7 @@
   - 신고 기능
   - 좋아요 기능
 - 회원
-  - 카카오 로그인 (서버만 구현)
+  - 카카오 로그인 (차후 클라 반영)
   - 랜덤 닉네임 생성 기능
   - 로컬 이메일 로그인
 - 알림
@@ -41,13 +42,14 @@
 - #### OSIV 종료 고려한 Service 계층에서 모든 비지니스 로직 처리
   - OSIV 전략은 트랜잭션 시작처럼 최초 데이터베이스 커넥션 시작 시점부터 API 응답이 끝날 때 까지 영속성 컨텍스트와 데이터베이스 커넥션을 유지 하지만 너무 오랜시간동안 데이터베이스 커넥션 리소스를 사용하기 때문에, 실시간 트래픽이 중요한 애플리케이션에서는 커넥션이 모자랄 수 있다
 - #### Controller, Service, Repository 역할 구분
-  - Controller : http 요청 받기, http요청 반환, validation, Service 로직 호출
+  - Controller : Http 요청 받기, Http요청 반환, Validation, Service 로직 호출
   - Service : Transaction 안에서 비지니스 로직 처리, Repository 호출, Entity -> Dto 변환
   - Repository : Entity or Dto 반환, 생명주기가 다른 복잡한 쿼리 분리 처리
 - #### Spring MVC 패턴 이해와 사용
   - Spring MVC 프레임 워크 사용
   - 프론트 컨트롤러 패턴으로 공통 로직 처리
-  - API 서버이기 때문에 body에 바로 json을 넣으므로 ViewResolver 와 View는 사용하지 않음.
+  - HttpMessageConverter 역할과 구조 이해
+  - API 서버이기 때문에 http body에 바로 json을 넣어 반환하므로 ViewResolver은 사용하지 않음.
 - #### 서버 성능 최적화 고려
   - 지연로딩
     - 모든 toOne 관계를 지연로딩으로 설정. 쿼리 튜닝을 용이하게 함
@@ -56,11 +58,11 @@
   - Entity를 외부에 노출하면 Entity의 변화에 따라 API 스펙도 변하는 애로사항 발생
   - Entity를 모두 Dto로 바꿔 처리
 - #### 복잡한 쿼리 처리
-  - from, join 절의 subquery사용시 jpql의 한계 발생
+  - From, Join 절의 Subquery사용시 Jpql의 한계 발생
   - Native Query 사용
 - #### 자바8 기능 연습
-  - optional
-  - stream
+  - Optional
+  - Stream (Entity -> Dto 변환)
 
 ### 5. UI
 
